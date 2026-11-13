@@ -1,185 +1,396 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ajakan Makan Bersama 💖</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family: Arial, sans-serif;
-    }
+    <title>Rekomendasi Menu Kantin</title>
 
-    body{
-      height:100vh;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      background: linear-gradient(135deg, #ff9ad5, #b388ff);
-      overflow:hidden;
-    }
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    .container{
-      background:white;
-      width:350px;
-      padding:30px;
-      border-radius:25px;
-      text-align:center;
-      box-shadow:0 10px 25px rgba(0,0,0,0.2);
-      position:relative;
-    }
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
 
-    h1{
-      color:#c2185b;
-      margin-bottom:15px;
-    }
+        .container {
+            width: 100%;
+            max-width: 500px;
+        }
 
-    p{
-      color:#6a1b9a;
-      margin-bottom:20px;
-      font-size:18px;
-    }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        }
 
-    .stickers{
-      font-size:50px;
-      margin-bottom:15px;
-    }
+        h1 {
+            text-align: center;
+            color: #5a189a;
+            margin-bottom: 10px;
+        }
 
-    .buttons{
-      position:relative;
-      height:120px;
-    }
+        .deskripsi {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+        }
 
-    button{
-      padding:12px 25px;
-      border:none;
-      border-radius:15px;
-      font-size:18px;
-      cursor:pointer;
-      transition:0.3s;
-      color:white;
-      font-weight:bold;
-    }
+        label {
+            display: block;
+            font-weight: bold;
+            color: #333;
+            margin-top: 15px;
+            margin-bottom: 7px;
+        }
 
-    #yesBtn{
-      background:#ff4fa3;
-      margin-right:10px;
-    }
+        select,
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            outline: none;
+        }
 
-    #yesBtn:hover{
-      transform:scale(1.1);
-      background:#ff1f8f;
-    }
+        select:focus,
+        input:focus {
+            border-color: #7b2cbf;
+        }
 
-    #noBtn{
-      background:#8e44ad;
-      position:absolute;
-    }
+        button {
+            width: 100%;
+            margin-top: 22px;
+            padding: 13px;
+            border: none;
+            border-radius: 10px;
+            background: #7b2cbf;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
 
-    #message{
-      margin-top:20px;
-      font-size:20px;
-      color:#d81b60;
-      font-weight:bold;
-      display:none;
-      animation: muncul 0.5s ease;
-    }
+        button:hover {
+            background: #5a189a;
+        }
 
-    @keyframes muncul{
-      from{
-        transform:scale(0.5);
-        opacity:0;
-      }
-      to{
-        transform:scale(1);
-        opacity:1;
-      }
-    }
+        #hasil {
+            margin-top: 20px;
+        }
 
-    .heart{
-      position:absolute;
-      color:pink;
-      animation: jatuh linear infinite;
-    }
+        .judul-hasil {
+            color: white;
+            text-align: center;
+            margin-bottom: 12px;
+        }
 
-    @keyframes jatuh{
-      0%{
-        transform:translateY(-100px);
-        opacity:1;
-      }
-      100%{
-        transform:translateY(100vh);
-        opacity:0;
-      }
-    }
+        .menu {
+            background: white;
+            padding: 18px;
+            margin-bottom: 12px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
 
-  </style>
+        .menu h3 {
+            color: #5a189a;
+            margin-bottom: 8px;
+        }
+
+        .harga {
+            font-size: 18px;
+            font-weight: bold;
+            color: #222;
+        }
+
+        .keterangan {
+            color: #555;
+            margin-top: 6px;
+            font-size: 14px;
+        }
+
+        .pesan {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            color: #555;
+        }
+
+        .error {
+            background: #ffe5e5;
+            color: #b00020;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+    </style>
 </head>
+
 <body>
 
-  <div class="container">
-    <div class="stickers">🍔💖🍕✨</div>
+<div class="container">
 
-    <h1>Ajakan Makan Bersama</h1>
+    <div class="card">
 
-    <p>Mau makan bareng aku nggak? 😋</p>
+        <h1>🍽️ Rekomendasi Menu Kantin</h1>
 
-    <div class="buttons">
-      <button id="yesBtn">Iya 💕</button>
-      <button id="noBtn">Tidak 😜</button>
+        <p class="deskripsi">
+            Pilih jenis menu dan masukkan budget kamu
+        </p>
+
+        <label for="pilihan">
+            Pilih Jenis Menu
+        </label>
+
+        <select id="pilihan">
+            <option value="makanan">
+                1. Makanan
+            </option>
+
+            <option value="minuman">
+                2. Minuman
+            </option>
+        </select>
+
+
+        <label for="budget">
+            Masukkan Budget (Rp)
+        </label>
+
+        <input
+            type="number"
+            id="budget"
+            placeholder="Contoh: 12000"
+            min="1"
+        >
+
+
+        <button onclick="cariMenu()">
+            🔎 Cari Rekomendasi
+        </button>
+
     </div>
 
-    <div id="message">
-      Yeayyy! 🎉<br>
-      Aku senang banget kamu mau makan bareng! 💖🍜
-    </div>
-  </div>
 
-  <script>
-    const noBtn = document.getElementById("noBtn");
-    const yesBtn = document.getElementById("yesBtn");
-    const message = document.getElementById("message");
+    <div id="hasil"></div>
 
-    // Tombol tidak kabur
-    noBtn.addEventListener("mouseover", () => {
-      const maxX = 250;
-      const maxY = 80;
+</div>
 
-      const randomX = Math.floor(Math.random() * maxX);
-      const randomY = Math.floor(Math.random() * maxY);
 
-      noBtn.style.left = randomX + "px";
-      noBtn.style.top = randomY + "px";
-    });
+<script>
 
-    // Jika menekan iya
-    yesBtn.addEventListener("click", () => {
-      message.style.display = "block";
-      buatHati();
-    });
+    // =========================
+    // DAFTAR MENU MAKANAN
+    // =========================
 
-    // Efek hati jatuh
-    function buatHati(){
-      for(let i = 0; i < 25; i++){
-        const heart = document.createElement("div");
-        heart.classList.add("heart");
-        heart.innerHTML = "💖";
+    const menuMakanan = [
+        {
+            nama: "Nasi Goreng",
+            harga: 12000
+        },
 
-        heart.style.left = Math.random() * window.innerWidth + "px";
-        heart.style.fontSize = (20 + Math.random() * 30) + "px";
-        heart.style.animationDuration = (3 + Math.random() * 5) + "s";
+        {
+            nama: "Mie Goreng",
+            harga: 10000
+        },
 
-        document.body.appendChild(heart);
+        {
+            nama: "Nasi Kuning",
+            harga: 10000
+        },
 
-        setTimeout(() => {
-          heart.remove();
-        }, 7000);
-      }
+        {
+            nama: "Ayam Geprek",
+            harga: 15000
+        },
+
+        {
+            nama: "Bakso",
+            harga: 13000
+        }
+    ];
+
+
+    // =========================
+    // DAFTAR MENU MINUMAN
+    // =========================
+
+    const menuMinuman = [
+        {
+            nama: "Es Teh",
+            harga: 5000
+        },
+
+        {
+            nama: "Air Mineral",
+            harga: 4000
+        },
+
+        {
+            nama: "Es Jeruk",
+            harga: 7000
+        },
+
+        {
+            nama: "Jus Alpukat",
+            harga: 10000
+        },
+
+        {
+            nama: "Cokelat",
+            harga: 8000
+        }
+    ];
+
+
+    // =========================
+    // FORMAT RUPIAH
+    // =========================
+
+    function rupiah(angka) {
+        return "Rp " + angka.toLocaleString("id-ID");
     }
-  </script>
+
+
+    // =========================
+    // PROGRAM REKOMENDASI
+    // =========================
+
+    function cariMenu() {
+
+        let pilihan =
+            document.getElementById("pilihan").value;
+
+        let budget =
+            Number(document.getElementById("budget").value);
+
+        let hasil =
+            document.getElementById("hasil");
+
+
+        // Mengecek budget
+
+        if (budget <= 0 || isNaN(budget)) {
+
+            hasil.innerHTML = `
+                <div class="error">
+                    ⚠️ Masukkan budget yang benar!
+                </div>
+            `;
+
+            return;
+        }
+
+
+        // Menentukan jenis menu
+
+        let daftarMenu;
+        let jenisMenu;
+
+
+        if (pilihan === "makanan") {
+
+            daftarMenu = menuMakanan;
+            jenisMenu = "Makanan";
+
+        } else {
+
+            daftarMenu = menuMinuman;
+            jenisMenu = "Minuman";
+
+        }
+
+
+        // Mencari menu yang harganya
+        // tidak melebihi budget
+
+        let menuSesuai = daftarMenu.filter(function(menu) {
+
+            return menu.harga <= budget;
+
+        });
+
+
+        // Jika tidak ada menu
+
+        if (menuSesuai.length === 0) {
+
+            hasil.innerHTML = `
+
+                <div class="pesan">
+
+                    <h3>
+                        😔 Tidak Ada Rekomendasi
+                    </h3>
+
+                    <p>
+                        Tidak ada ${jenisMenu.toLowerCase()}
+                        yang sesuai dengan budget
+                        ${rupiah(budget)}.
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        // Menampilkan judul hasil
+
+        hasil.innerHTML = `
+
+            <h2 class="judul-hasil">
+                Rekomendasi ${jenisMenu}
+            </h2>
+
+        `;
+
+
+        // Menampilkan menu
+
+        menuSesuai.forEach(function(menu) {
+
+            hasil.innerHTML += `
+
+                <div class="menu">
+
+                    <h3>
+                        ${menu.nama}
+                    </h3>
+
+                    <p class="harga">
+                        ${rupiah(menu.harga)}
+                    </p>
+
+                    <p class="keterangan">
+                        ✓ Sesuai dengan budget kamu
+                    </p>
+
+                </div>
+
+            `;
+
+        });
+
+    }
+
+</script>
 
 </body>
 </html>
